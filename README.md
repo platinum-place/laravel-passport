@@ -1,66 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Descripción
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es un ejemplo diseñado para ilustrar la metodología de trabajo en proyectos desarrollados con Laravel. 
 
-## About Laravel
+En particular, se muestra el uso de autenticación OAuth2, en Laravel Passport, un paquete para dicho sistema de autenticación.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+El proyecto muestra como interpreto dicho paquete para la creation de REST API para la communion entre sistemas, sin intervention humana.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Metodologías y patrones utilizados
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Se han implementado capas lógicas para el uso de las diferentes tecnologías de Laravel.
 
-## Learning Laravel
+### Enums
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Los enums son constantes que comparten lógicas y reglas, siempre vinculadas a un modelo principal, y hacen referencia a una tabla que contiene la misma información.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Logs
 
-## Laravel Sponsors
+Los logs están implementados de dos maneras:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Los logs estándar de Laravel, utilizando su *facade* con el canal `database`.
+2. Logs a partir del modelo, donde todos los modelos tienen la capacidad de utilizarlos a través de la clase `BaseModel`.
 
-### Premium Partners
+Ambos enfoques permiten una gestión eficaz de los registros en la base de datos.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Modelos
 
-## Contributing
+Además del modelo de prueba incluido en este proyecto, existen modelos base esenciales para las funcionalidades principales, como:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Gestión de logs.
+- Manejo de acciones.
+- Clase abstracta que sirve como base para todos los modelos.
 
-## Code of Conduct
+Estos modelos proporcionan una estructura sólida para las operaciones del proyecto.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Repositorios
 
-## Security Vulnerabilities
+Los repositorios son una capa adicional sobre los modelos, encargada de manejar la lógica relacionada con la base de datos en torno a un modelo.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Se utiliza una clase principal que sirve como base, de la cual las clases hijas pueden heredar y sobrescribir la lógica cuando sea necesario. Este patrón permite una separación clara de responsabilidades y facilita el mantenimiento del código.
 
-## License
+### Servicios
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Los servicios forman una capa encargada de manejar la lógica de negocio que se encuentra entre los controladores y los modelos.
+
+Se implementa una clase principal que define los métodos clave y gestiona los repositorios, permitiendo una organización más clara de la lógica de negocio y facilitando su reutilización en distintas partes del sistema.
+
+## Iniciar el proyecto
+
+El proyecto está configurado en Docker utilizando Laravel Sail. Incluye un seeder de prueba, por lo que, para ejecutar el proyecto, es necesario:
+
+1. Descargar las dependencias con Composer.
+2. Ejecutar `./vendor/bin/sail up -d`.
+3. Ejecutar `./vendor/bin/sail artisan migrate:fresh --seed`.
+
+## Probar funcionalidades
+
+Dentro del proyecto se encuentra una colección de endpoints (exportada desde Postman) que permite su importación y prueba.
+
+## Paquetes utilizados
+
+- [Passport](https://github.com/laravel/passport) para la autenticación.
+- [Laravel Lang](https://github.com/Laravel-Lang/common) para las traducciones.
+- [Laravel Sail](https://github.com/laravel/sail) para la gestión del entorno de pruebas.

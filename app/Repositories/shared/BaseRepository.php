@@ -2,8 +2,6 @@
 
 namespace App\Repositories\shared;
 
-use App\Enums\ActionEnum;
-use App\Enums\Log\LogLevelEnum;
 use App\Models\shared\BaseModel;
 
 abstract class BaseRepository

@@ -3,18 +3,15 @@
 namespace app\Providers;
 
 use App\Models\Passport\Client;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Passport\Passport;
-use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Closure;
-use Exception;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
-use Symfony\Component\HttpFoundation\Response;
 
 class AppServiceProvider extends ServiceProvider
 {
